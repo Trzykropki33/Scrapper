@@ -191,15 +191,18 @@ def chose_brand(brands)
     if match
       puts "Found: #{match[:name]} with #{match[:count]} listings"
       max_pages = (match[:count] / 32).to_i
+      if match[:count] < 32
+        return match[:name], 1
+      else
+        loop do
+          puts "How many pages to read? (1 - #{max_pages})"
+          i = gets.to_i
 
-      loop do
-        puts "How many pages to read? (1 - #{max_pages})"
-        i = gets.to_i
-
-        if i.between?(1, max_pages)
-          return match[:name], i  # ← zwraca string i integer
-        else
-          puts "Invalid number. Try again:"
+          if i.between?(1, max_pages)
+            return match[:name], i  # ← zwraca string i integer
+          else
+            puts "Invalid number. Try again:"
+          end
         end
       end
     else
